@@ -7,12 +7,18 @@ export const newId = () =>
   Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
 export function newSpace(name) {
-  return { format: FORMAT, version: 1, name, quotes: [], deleted: [] };
+  return { format: FORMAT, version: 1, name, quotes: [], deleted: [], shortlist: [], plan: null };
+}
+
+/** Fill in fields added after version 1 so older saves and exports still load. */
+export function upgrade(space) {
+  if (!space) return space;
+  return { deleted: [], shortlist: [], plan: null, ...space };
 }
 
 export function loadSpace() {
   try {
-    return JSON.parse(localStorage.getItem(KEY));
+    return upgrade(JSON.parse(localStorage.getItem(KEY)));
   } catch {
     return null;
   }
@@ -38,7 +44,7 @@ export function parseSpaceFile(text) {
   if (data?.format !== FORMAT || !Array.isArray(data.quotes)) {
     throw new Error("That file isn't a Reno Quote Comparer export.");
   }
-  return { deleted: [], ...data };
+  return upgrade(data);
 }
 
 const newer = (a, b) => ((a?.updatedAt ?? "") >= (b?.updatedAt ?? "") ? a : b);
@@ -67,5 +73,14 @@ export function mergeSpaces(local, incoming) {
     byId.set(q.id, base);
   }
   const quotes = [...byId.values()].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
-  return { ...local, quotes, deleted };
+
+  // Shortlist entries are never deleted, only marked removed, so the latest
+  // edit per firm wins on both devices.
+  const shortlist = new Map();
+  for (const s of [...(local.shortlist ?? []), ...(incoming.shortlist ?? [])]) {
+    shortlist.set(s.uen, newer(shortlist.get(s.uen), s) ?? s);
+  }
+  const plan = local.plan && incoming.plan ? newer(local.plan, incoming.plan) : local.plan ?? incoming.plan ?? null;
+
+  return { ...upgrade(local), quotes, deleted, shortlist: [...shortlist.values()], plan: structuredClone(plan) };
 }

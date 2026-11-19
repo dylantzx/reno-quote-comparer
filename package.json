@@ -1,12 +1,15 @@
 {
   "name": "reno-quote-comparer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Compare renovation quotes like-for-like (Stage 1 proof of concept)",
   "scripts": {
     "start": "node scripts/serve.js",
-    "test": "node --test"
+    "test": "node --test",
+    "build-data": "node scripts/build-vendors.js"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

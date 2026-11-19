@@ -113,3 +113,38 @@ td.low { background: var(--low-bg); color: var(--low-ink); }
 .editor td.cat { width: 190px; }
 .notes { margin: 8px 0 0; padding-left: 18px; color: var(--high-ink); font-size: 14px; }
 details summary { cursor: pointer; font-weight: 600; }
+
+/* steps, badges, finder, plan */
+.steps { margin: 4px 0 16px; flex-wrap: wrap; }
+.steps button { padding: 8px 16px; }
+.badges { margin: 4px 0; display: flex; gap: 4px; flex-wrap: wrap; }
+.badges.right { justify-content: flex-end; margin-top: 6px; }
+.badge {
+  display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px;
+  background: var(--low-bg); color: var(--low-ink); white-space: nowrap;
+}
+.badge.ok { background: var(--accent); color: var(--accent-ink); }
+.badge.plain { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; margin: 0; color: var(--ink); font-size: 14px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer;
+}
+.chip input, .check input { width: auto; }
+.check { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 14px; }
+.vendor {
+  display: flex; gap: 12px; align-items: flex-start; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.vendor-main { min-width: 0; }
+.vendor button { flex-shrink: 0; }
+.block { display: block; }
+table.plan td.qty { white-space: nowrap; width: 180px; }
+table.plan td.qty input { width: 80px; padding: 5px 8px; }
+table.plan tr.group td { font-weight: 700; background: var(--bg); }
+table.plan tr.off td { color: var(--muted); }
+.summary h2 { font-size: 22px; margin-bottom: 2px; }
+a { color: var(--accent); }
+@media (max-width: 600px) {
+  .vendor { flex-direction: column; }
+}
