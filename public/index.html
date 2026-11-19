@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reno Quote Comparer</title>
+  <meta name="description" content="Compare renovation quotes like-for-like: spot missing items and outlier prices, and check firms against the HDB contractor directory." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="top">
+    <span class="brand">Reno Quote Comparer</span>
+    <span id="space-name" class="muted"></span>
+    <span class="top-actions" id="top-actions" hidden>
+      <button id="export" class="ghost">Export for partner</button>
+      <button id="import" class="ghost">Import partner's file</button>
+    </span>
+    <input id="import-file" type="file" accept=".json,application/json" hidden />
+  </header>
+  <main id="app"></main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
